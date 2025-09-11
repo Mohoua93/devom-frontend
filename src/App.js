@@ -6,8 +6,8 @@ import './App.css';
 
 // Composants des pages
 import Home from './pages/Home';
-import Projects from './pages/Projects';
-import About from './pages/About';
+// import Projects from './pages/Projects';
+// import About from './pages/About';
 import Contact from './pages/Contact';
 
 
@@ -19,8 +19,8 @@ function App() {
         
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/projets" element={<Projects />} />
-          <Route path="/a-propos" element={<About />} />
+          {/* <Route path="/projets" element={<Projects />} /> */}
+          {/* <Route path="/a-propos" element={<About />} /> */}
           <Route path="/contact" element={<Contact />} />
         </Routes>
         < Footer />
