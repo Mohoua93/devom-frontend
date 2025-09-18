@@ -1,0 +1,91 @@
+/* Styles pour la barre de navigation */
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    padding: 15px 20px;
+    background-color: #333;
+    color: white;
+  }
+  
+  /* Styles pour le menu burger */
+  .menu-burger {
+    position: absolute;
+    left: 20px;
+    cursor: pointer;
+    z-index: 1001;
+  }
+  
+  .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #c4b0a0;
+    margin: 6px 0;
+    transition: 0.4s;
+  }
+  
+  .bar.open:nth-child(1) {
+    transform: rotate(-45deg) translate(-6px, 6px);
+  }
+  
+  .bar.open:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .bar.open:nth-child(3) {
+    transform: rotate(45deg) translate(-6px, -6px);
+  }
+  
+  /* Styles pour le logo (texte) */
+  .navbar-logo {
+    font-size: 2em;
+    font-weight: bold;
+  }
+  
+  .navbar-logo a {
+    color: #c4b0a0;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  
+  /* Styles pour le menu latéral */
+  .sidebar-menu {
+    height: 45%;
+    width: 0;
+    border-radius: 5%;
+    position: fixed;
+    z-index: 1000;
+    top: 80px;
+    left: 25px;
+    background-color: #c4b0a0;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 15px;
+  }
+  
+  .sidebar-menu.open {
+    width: 250px;
+  }
+  
+  .sidebar-menu ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar-menu li {
+    padding: 8px 8px 40px 32px;
+    text-align: left;
+    font-weight: bold;
+  }
+  
+  .sidebar-menu li a {
+    text-decoration: none;
+    font-size: 20px;
+    color: black;
+    display: block;
+    transition: 0.3s;
+    text-transform: uppercase
+  }
+  
