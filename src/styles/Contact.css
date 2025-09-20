@@ -1,66 +1,65 @@
 .contact-form-container {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f9;
-  }
-  
-  .contact-form-container h2 {
-    text-align: center;
-    color: #333;
-  }
-  
-  .contact-form-container form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .contact-form-container label {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .contact-form-container input,
-  .contact-form-container textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .contact-form-container button {
-    padding: 12px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .contact-form-container button:hover {
-    background-color: #0056b3;
-  }
-  
-  .contact-form-container button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-  
-  .form-status {
-    text-align: center;
-    margin-top: 15px;
-    font-weight: bold;
-  }
-  
-  /* Styles pour les messages de succès et d'erreur */
-  .form-status.success {
-    color: green;
-  }
-  
-  .form-status.error {
-    color: red;
-  }
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.contact-form-container h2 {
+  text-align: center;
+  color: #333;
+}
+
+.contact-form-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form-container label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.contact-form-container input,
+.contact-form-container textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.contact-form-container button {
+  padding: 12px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.contact-form-container button:hover {
+  background-color: #0056b3;
+}
+
+.contact-form-container button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.form-status {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.form-status.success {
+  color: green;
+}
+
+.form-status.error {
+  color: red;
+}
