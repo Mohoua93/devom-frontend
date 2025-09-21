@@ -22,13 +22,13 @@ function Contact() {
   // Gère l'envoi du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setStatus("Envoi en cours...");
+    setLoading(true);
 
     try {
-      // ✅ Assurez-vous que cette URL est celle de votre backend déployé sur Render
+      // ✅ L'URL est maintenant correcte
       const response = await fetch(
-        "https://devom-backend.onrender.com",
+        "https://devom-backend.onrender.com/api/contact",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
