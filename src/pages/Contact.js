@@ -28,7 +28,7 @@ function Contact() {
     try {
       // ✅ Assurez-vous que cette URL est celle de votre backend déployé sur Render
       const response = await fetch(
-        "https://devom-backend.onrender.com/api/contact",
+        "https://devom-backend.onrender.com",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
