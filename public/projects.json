@@ -5,7 +5,7 @@
     "image": "/images/project1.jpg",
     "description": "Création de site web pour une associations humanitaires qui oeuvre princiapelement en Afrique et en Asie, auprès des plus démunies.",
     "technologies": ["HTML", "CSS", "JavaScript", "React"],
-    "githubLink": "https://github.com/votre-nom/repo-1",
+    "githubLink": "https://github.com/Mohoua93/colis-du-coeur-frontend.git",
     "liveLink": "https://www.colisducoeur.fr/"
   },
   {
@@ -19,7 +19,7 @@
   },
   {
     "id": 3,
-    "title": "Nom du Projet 3",
+    "title": "",
     "image": "/images/project3.svg",
     "description": "Un projet plus personnel, peut-être. Vous pouvez parler de vos inspirations et du processus de création.",
     "technologies": ["Vue.js", "Firebase", "Sass"],
