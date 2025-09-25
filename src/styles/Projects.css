@@ -1,0 +1,118 @@
+/* src/styles/Projects.css */
+
+.projects-container {
+  padding: 50px 20px;
+  background-color: #f8f9fa; /* Un fond léger pour que les cartes ressortent */
+  text-align: center;
+}
+
+.projects-container h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+/* --- Grille de projets --- */
+.projects-grid {
+  /* Crée une grille responsive : colonnes auto-adaptables, minimum 300px */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px; /* Espace entre les cartes */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* --- Style de la carte individuelle --- */
+.project-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  /* Effet de transition au survol */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card:hover {
+  transform: translateY(-10px); /* Soulève légèrement la carte */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.project-image {
+  width: 100%;
+  height: 200px; /* Hauteur fixe pour l'image */
+  object-fit: cover; /* Assure que l'image couvre bien la zone sans déformation */
+}
+
+.project-info {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Permet au contenu de l'info de s'étendre verticalement */
+}
+
+.project-info h3 {
+  font-size: 1.5rem;
+  color: #007bff; /* Couleur d'accentuation */
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.project-description {
+  font-size: 1rem;
+  color: #666;
+  flex-grow: 1; /* La description prend l'espace disponible */
+}
+
+/* --- Badges de technologies --- */
+.project-techs {
+  margin: 15px 0;
+}
+
+.tech-badge {
+  background-color: #e9ecef;
+  color: #495057;
+  font-size: 0.8rem;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-right: 5px;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+/* --- Liens et Boutons --- */
+.project-links {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.link-btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  flex-grow: 1; 
+  text-align: center;
+}
+
+.github-btn {
+  background-color: #333;
+  color: #fff;
+}
+
+.github-btn:hover {
+  background-color: #555;
+}
+
+.live-btn {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.live-btn:hover {
+  background-color: #0056b3;
+}
