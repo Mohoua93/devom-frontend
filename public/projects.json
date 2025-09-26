@@ -2,7 +2,7 @@
   {
     "id": 1,
     "title": "Les colis du coeur",
-    "image": "/images/project1.jpg",
+    "image": "/images/img-colis-du-coeur.png",
     "description": "Création de site web pour une associations humanitaires qui oeuvre princiapelement en Afrique et en Asie, auprès des plus démunies.",
     "technologies": ["HTML", "CSS", "JavaScript", "React"],
     "githubLink": "https://github.com/Mohoua93/colis-du-coeur-frontend.git",
