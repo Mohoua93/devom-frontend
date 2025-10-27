@@ -64,3 +64,5 @@
   .form-status.error {
     color: red;
   }
+
+  .hp-field { position: absolute; left: -5000px; width: 1px; height: 1px; overflow: hidden; }
