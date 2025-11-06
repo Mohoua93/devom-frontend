@@ -6,7 +6,7 @@
     position: relative;
     width: 100%;
     padding: 15px 20px;
-    background-color: #333;
+    background-color: #1545a5;
     color: white;
   }
   
@@ -21,7 +21,7 @@
   .bar {
     width: 25px;
     height: 3px;
-    background-color: #c4b0a0;
+    background-color: #ffffff;
     margin: 6px 0;
     transition: 0.4s;
   }
@@ -45,7 +45,7 @@
   }
   
   .navbar-logo a {
-    color: #c4b0a0;
+    color: white;
     text-decoration: none;
     text-transform: uppercase;
   }
@@ -59,7 +59,7 @@
     z-index: 1000;
     top: 80px;
     left: 25px;
-    background-color: #c4b0a0;
+    background-color: #007bff;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 15px;
@@ -83,7 +83,7 @@
   .sidebar-menu li a {
     text-decoration: none;
     font-size: 20px;
-    color: black;
+    color: rgb(255, 255, 255);
     display: block;
     transition: 0.3s;
     text-transform: uppercase

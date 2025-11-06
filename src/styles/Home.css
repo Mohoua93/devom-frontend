@@ -1,6 +1,6 @@
 .home-container {
     /* Assurez-vous que l'image de fond est définie ici ou sur un élément parent */
-    background-image: url('/public/images/img-home.jpg');
+    background-image: url('/public/images/back-home.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -17,12 +17,12 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: #c4b0a0; /* Couleur de texte pour le contenu du héros */
+    color: #ffffff; /* Couleur de texte pour le contenu du héros */
     padding: 20px;
   }
   
   .hero-text {
-    background-color: rgba(0, 0, 0, 0.7); /* Fond noir semi-transparent */
+    background-color: rgba(12, 39, 176, 0.634); /* Fond noir semi-transparent */
     padding: 20px 40px;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -45,18 +45,18 @@
   .discover-button {
     display: inline-block;
     padding: 15px 30px;
-    background-color: #000000; /* Un bleu vif pour le rendre visible */
+    background-color: #007bff;
     color: white;
     text-decoration: none;
     margin-top: 200px;
     border-radius: 50px;
     font-weight: bold;
     transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(6, 32, 199, 0.2);
   }
   
   .discover-button:hover {
-    background-color: #c4b0a0;
+    background-color: #0b1fcf;
     transform: scale(1.05);
   }
   
