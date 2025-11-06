@@ -1,9 +1,10 @@
 import React from 'react';
+import '../styles/footer.css';
 
 function Footer() {
   return (
-    <footer>
-      <p>© 2024 Devom. Tous droits réservés.</p>
+    <footer className='footer'>
+      <p>© 2025 Devom. Tous droits réservés.</p>
     </footer>
   );
 }
