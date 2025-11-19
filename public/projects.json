@@ -2,7 +2,7 @@
   {
     "id": 1,
     "title": "Les colis du coeur",
-    "image": "/images/img-colis-du-coeur.png",
+    "image": "/images/logo-cdc.png",
     "description": "Création de site web pour une associations humanitaires qui oeuvre princiapelement en Afrique et en Asie, auprès des plus démunies.",
     "technologies": ["HTML", "CSS", "JavaScript", "React"],
     "githubLink": "https://github.com/Mohoua93/colis-du-coeur-frontend.git",
@@ -11,7 +11,7 @@
   {
     "id": 2,
     "title": "Dress Hype",
-    "image": "/images/project2.png",
+    "image": "/images/logo-DH.png",
     "description": "Site e-commerce.",
     "technologies": ["Shopify"],
     "githubLink": "https://github.com/votre-nom/repo-2",
@@ -20,10 +20,8 @@
   {
     "id": 3,
     "title": "",
-    "image": "/images/project3.svg",
-    "description": "Un projet plus personnel, peut-être. Vous pouvez parler de vos inspirations et du processus de création.",
-    "technologies": ["Vue.js", "Firebase", "Sass"],
-    "githubLink": "https://github.com/votre-nom/repo-3",
-    "liveLink": "https://projet3.com"
+    "image": "/images/logo-MBP.png",
+    "description": "E-commerce en cours de création.",
+    "technologies": ["Shopify"]
   }
 ]
