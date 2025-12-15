@@ -1,31 +1,55 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer'; 
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import "./App.css";
 
-// Composants des pages
-import Home from './pages/Home';
-import Projects from './pages/Projects';
-import About from './pages/About';
-import Contact from './pages/Contact';
-
+import Home from "./pages/Home";
+import Projects from "./pages/Projects";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
     <Router>
-      <div className="App">
+      <div className="app">
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/projets" element={<Projects />} />
-          <Route path="/a-propos" element={<About />} /> 
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-        < Footer />
-      </div>
 
-      
+        <main className="app__main">
+          <Routes>
+            {/* Home: full width */}
+            <Route path="/" element={<Home />} />
+
+            {/* Autres pages: centrées */}
+            <Route
+              path="/projets"
+              element={
+                <div className="page-container">
+                  <Projects />
+                </div>
+              }
+            />
+            <Route
+              path="/a-propos"
+              element={
+                <div className="page-container">
+                  <About />
+                </div>
+              }
+            />
+            <Route
+              path="/contact"
+              element={
+                <div className="page-container">
+                  <Contact />
+                </div>
+              }
+            />
+          </Routes>
+        </main>
+
+        <Footer />
+      </div>
     </Router>
   );
 }

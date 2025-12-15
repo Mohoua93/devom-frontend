@@ -1,79 +1,113 @@
 .home-container {
-    /* Assurez-vous que l'image de fond est définie ici ou sur un élément parent */
-    background-image: url('/public/images/back-home.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    height: 100vh; /* S'assure que la section prend toute la hauteur de la vue */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-  
-  .hero-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: #ffffff; /* Couleur de texte pour le contenu du héros */
-    padding: 20px;
-  }
-  
-  .hero-text {
-    background-color: rgba(12, 39, 176, 0.634); /* Fond noir semi-transparent */
-    padding: 20px 40px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .hero-text h1 {
-    font-size: 2.5em;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .hero-text p {
-    font-size: 1.2em;
-    font-style: italic;
-    opacity: 0.8;
-    text-transform: uppercase;
-  }
-  
-  /* Styles pour le bouton de découverte des projets */
-  .discover-button {
-    display: inline-block;
-    padding: 15px 30px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    margin-top: 200px;
-    border-radius: 50px;
-    font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 4px 15px rgba(6, 32, 199, 0.2);
-  }
-  
-  .discover-button:hover {
-    background-color: #0b1fcf;
-    transform: scale(1.05);
-  }
-  
-  /* Styles pour le bouton WhatsApp */
-  .whatsapp-fixed-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .whatsapp-fixed-button img {
-    width: 50px;
-    height: 50px;
-  }
-  
-  .whatsapp-fixed-button:hover {
-    transform: scale(1.1);
-  }
+  /* ✅ CRA: pas de /public */
+  background-image: url("/public/images/back-home.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  width: 100%;
+  min-height: 100dvh;
+
+  display: grid;
+  place-items: center;
+
+  padding: clamp(20px, 4vw, 56px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Aucun overlay */
+.home-container::before,
+.home-container::after {
+  content: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  width: min(980px, 100%);
+  text-align: center;
+  display: grid;
+  gap: 18px;
+  justify-items: center;
+}
+
+.hero-text {
+  background: linear-gradient(
+    135deg,
+    rgba(243, 183, 166, 0.96),
+    rgba(185, 214, 198, 0.96)
+  );
+  border: none;
+  border-radius: 26px;
+  padding: clamp(18px, 3.2vw, 34px);
+  box-shadow: 0 18px 55px rgba(10, 10, 10, 0.14);
+}
+
+.hero-text::before { content: none; }
+
+.hero-text h1 {
+  margin: 0 0 12px 0;
+  color: #15181f;
+  font-size: clamp(28px, 3.6vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.hero-text p {
+  margin: 0;
+  color: rgba(21, 24, 31, 0.72);
+  font-size: clamp(14px, 1.5vw, 18px);
+  line-height: 1.6;
+  font-style: normal;
+  text-transform: none;
+}
+
+.discover-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 14px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(21, 24, 31, 0.12);
+
+  background: #ffffff;
+  color: #15181f;
+  font-weight: 700;
+
+  text-decoration: none;
+  box-shadow: 0 14px 35px rgba(10, 10, 10, 0.14);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.discover-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 45px rgba(10, 10, 10, 0.18);
+  filter: saturate(1.02);
+}
+
+.whatsapp-fixed-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  transition: transform 0.2s ease-in-out;
+}
+
+.whatsapp-fixed-button img {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  box-shadow: 0 14px 30px rgba(10, 10, 10, 0.20);
+}
+
+.whatsapp-fixed-button:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+
+@media (max-width: 640px) {
+  .home-container { padding: 18px; }
+  .hero-text { border-radius: 20px; }
+}
