@@ -1,91 +1,185 @@
-/* Styles pour la barre de navigation */
-.navbar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    width: 100%;
-    padding: 15px 20px;
-    background: linear-gradient(135deg, rgba(243, 183, 166, 0.92), rgba(185, 214, 198, 0.92));
-    color: black;
-  }
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
   
-  /* Styles pour le menu burger */
-  .menu-burger {
-    position: absolute;
-    left: 20px;
-    cursor: pointer;
-    z-index: 1001;
+}
+
+.nav__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  /* ✅ Navbar plus “importante” */
+  padding: 18px 20px;
+  min-height: 84px;
+
+  background-color: rgba(166, 203, 243, 0.55);
+  border-bottom: 1px solid rgba(21, 24, 31, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nav__logo {
+  /* ✅ Logo bien visible */
+  height: 56px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.nav__wordmark {
+  font-weight: 900;
+  letter-spacing: 0.6px;
+  color: var(--text);
+  font-size: 18px;
+}
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nav__link {
+  color: rgba(21, 24, 31, 0.78);
+  font-weight: 700;
+  padding: 10px 12px;
+  border-radius: 999px;
+}
+
+.nav__link.active {
+  color: var(--text);
+  background-color: rgba(166, 203, 243, 0.55);
+  border: 1px solid rgba(21, 24, 31, 0.08);
+}
+
+/* Burger */
+.nav__burger {
+  display: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  border: 1px solid rgba(21, 24, 31, 0.12);
+  background: #fff;
+}
+
+.nav__burgerLines {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: rgba(21, 24, 31, 0.82);
+  margin: 0 auto;
+  position: relative;
+}
+.nav__burgerLines::before,
+.nav__burgerLines::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 2px;
+  background: rgba(21, 24, 31, 0.82);
+}
+.nav__burgerLines::before { top: -7px; }
+.nav__burgerLines::after { top: 7px; }
+
+/* Mobile full-screen overlay */
+.nav__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(255, 252, 248, 0.96);
+  display: none;
+}
+
+.nav__overlay.is-open { display: block; }
+
+.nav__panel {
+  height: 100dvh;
+  width: 100%;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: navPanelIn 180ms ease-out both;
+}
+
+@keyframes navPanelIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.nav__panelTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav__panelBrand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 900;
+  color: var(--text);
+}
+
+.nav__panelLogo {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.nav__close {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  border: 1px solid rgba(21, 24, 31, 0.12);
+  background: #fff;
+  color: var(--text);
+  font-size: 18px;
+}
+
+.nav__panelLinks {
+  display: grid;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.nav__panelLink {
+  padding: 16px 14px;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid rgba(21, 24, 31, 0.10);
+  color: var(--text);
+  font-weight: 800;
+}
+
+.nav__panelLink.active {
+  background: linear-gradient(135deg, rgba(243, 183, 166, 0.55), rgba(185, 214, 198, 0.55));
+  border-color: rgba(21, 24, 31, 0.10);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .nav__links { display: none; }
+  .nav__burger { display: inline-flex; align-items: center; justify-content: center; }
+
+  .nav__bar {
+    padding: 16px;
+    min-height: 78px;
   }
-  
-  .bar {
-    width: 25px;
-    height: 3px;
-    background-color: black;
-    margin: 6px 0;
-    transition: 0.4s;
-  }
-  
-  .bar.open:nth-child(1) {
-    transform: rotate(-45deg) translate(-6px, 6px);
-  }
-  
-  .bar.open:nth-child(2) {
-    opacity: 0;
-  }
-  
-  .bar.open:nth-child(3) {
-    transform: rotate(45deg) translate(-6px, -6px);
-  }
-  
-  /* Styles pour le logo (texte) */
-  .navbar-logo {
-    font-size: 2em;
-    font-weight: bold;
-  }
-  
-  .navbar-logo a {
-    color: black;
-    text-decoration: none;
-    text-transform: uppercase;
-  }
-  
-  /* Styles pour le menu latéral */
-  .sidebar-menu {
-    height: 40%;
-    width: 0;
-    border-radius: 5%;
-    position: fixed;
-    z-index: 1000;
-    top: 80px;
-    left: 25px;
-    background: linear-gradient(135deg, rgba(243, 183, 166, 0.92), rgba(185, 214, 198, 0.92));
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 15px;
-  }
-  
-  .sidebar-menu.open {
-    width: 250px;
-  }
-  
-  .sidebar-menu ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .sidebar-menu li {
-    padding: 8px 8px 40px 32px;
-    text-align: left;
-    font-weight: bold;
-  }
-  
-  .sidebar-menu li a {
-    text-decoration: none;
-    font-size: 20px;
-    color: black;
-    display: block;
-    transition: 0.3s;
-    text-transform: uppercase
-  }
+
+  .nav__logo { height: 48px; }
+  .nav__wordmark { font-size: 16px; }
+}
+
+
   
