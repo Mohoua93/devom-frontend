@@ -45,7 +45,7 @@ background-color: rgba(166, 203, 243, 0.55);
 
 .hero-text h1 {
   margin: 0 0 12px 0;
-  color: #15181f;
+  color: #0a1b4e;
   font-size: clamp(28px, 3.6vw, 48px);
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -70,7 +70,7 @@ background-color: rgba(166, 203, 243, 0.55);
   border: 1px solid rgba(21, 24, 31, 0.12);
 
   background-color: rgba(166, 203, 243, 0.55);
-  color: #15181f;
+  color: #0a1b4e;
   font-weight: 700;
 
   text-decoration: none;

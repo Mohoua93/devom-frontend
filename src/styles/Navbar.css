@@ -67,14 +67,14 @@
   height: 48px;
   border-radius: 14px;
   border: 1px solid rgba(21, 24, 31, 0.12);
-  background: #fff;
+  background: #1545a5;
 }
 
 .nav__burgerLines {
   display: block;
   width: 20px;
   height: 2px;
-  background: rgba(21, 24, 31, 0.82);
+  background: white;
   margin: 0 auto;
   position: relative;
 }
@@ -85,7 +85,7 @@
   left: 0;
   width: 20px;
   height: 2px;
-  background: rgba(21, 24, 31, 0.82);
+  background: white;
 }
 .nav__burgerLines::before { top: -7px; }
 .nav__burgerLines::after { top: 7px; }
@@ -179,6 +179,8 @@
 
   .nav__logo { height: 48px; }
   .nav__wordmark { font-size: 16px; }
+
+  
 }
 
 
