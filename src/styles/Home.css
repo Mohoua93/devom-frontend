@@ -52,8 +52,9 @@ background-color: rgba(166, 203, 243, 0.55);
 }
 
 .hero-text p {
+  font-weight: 900;
   margin: 0;
-  color: rgba(21, 24, 31, 0.72);
+  color: #0a1b4e;;
   font-size: clamp(14px, 1.5vw, 18px);
   line-height: 1.6;
   font-style: normal;
@@ -79,7 +80,8 @@ background-color: rgba(166, 203, 243, 0.55);
 }
 
 .discover-button:hover {
-  background-color: rgba(3, 82, 167, 0.65);
+  background-color: #0a1b4e;
+    color: white;
 }
 
 .discover-button:hover {

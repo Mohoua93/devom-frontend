@@ -27,20 +27,24 @@ export default function Navbar() {
   return (
     <header className="nav">
       <div className="nav__bar">
+        {/* ✅ DEVOM en texte (logo supprimé) */}
         <Link to="/" className="nav__brand" aria-label="Aller à l'accueil">
-          {/* Mets ton logo dans /public/images/logo-devom.png */}
-          <img
-            className="nav__logo"
-            src="/images/logo-devom.png"
-            alt="DEVOM"
-          />
+          DEVOM
         </Link>
 
         <nav className="nav__links" aria-label="Navigation principale">
-          <NavLink to="/" end className="nav__link">Accueil</NavLink>
-          <NavLink to="/projets" className="nav__link">Projets</NavLink>
-          <NavLink to="/a-propos" className="nav__link">À propos</NavLink>
-          <NavLink to="/contact" className="nav__link">Contact</NavLink>
+          <NavLink to="/" end className="nav__link">
+            Accueil
+          </NavLink>
+          <NavLink to="/projets" className="nav__link">
+            Projets
+          </NavLink>
+          <NavLink to="/a-propos" className="nav__link">
+            À propos
+          </NavLink>
+          <NavLink to="/contact" className="nav__link">
+            Contact
+          </NavLink>
         </nav>
 
         <button
@@ -70,23 +74,34 @@ export default function Navbar() {
         >
           <div className="nav__panelTop">
             <div className="nav__panelBrand">
-              <img className="nav__panelLogo" src="/images/logo-devom.png" alt="DEVOM" />
-              <span>Menu</span>
+              <span className="nav__panelWordmark">DEVOM</span>
             </div>
-            <button className="nav__close" type="button" onClick={() => setOpen(false)} aria-label="Fermer">
+            <button
+              className="nav__close"
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label="Fermer"
+            >
               ✕
             </button>
           </div>
 
           <nav className="nav__panelLinks">
-            <NavLink to="/" end className="nav__panelLink">Accueil</NavLink>
-            <NavLink to="/projets" className="nav__panelLink">Projets</NavLink>
-            <NavLink to="/a-propos" className="nav__panelLink">À propos</NavLink>
-            <NavLink to="/contact" className="nav__panelLink">Contact</NavLink>
+            <NavLink to="/" end className="nav__panelLink">
+              Accueil
+            </NavLink>
+            <NavLink to="/projets" className="nav__panelLink">
+              Projets
+            </NavLink>
+            <NavLink to="/a-propos" className="nav__panelLink">
+              À propos
+            </NavLink>
+            <NavLink to="/contact" className="nav__panelLink">
+              Contact
+            </NavLink>
           </nav>
         </div>
       </div>
     </header>
   );
 }
-

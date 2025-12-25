@@ -19,7 +19,7 @@ const Home = () => {
     <section className="home-container">
       <div className="hero-content">
         <div className="hero-text">
-          <h1>De l'idée au code : Je donne vie à vos projets numériques.</h1>
+          <h1>Un site qui vous ressemble, pensé pour vos utilisateurs et votre business.</h1>
           <p>
             Développeur web full stack, spécialisé dans la création d'expériences utilisateur uniques et performantes.
           </p>
