@@ -1,0 +1,187 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.nav__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  /* Navbar “importante” */
+  padding: 18px 20px;
+  min-height: 96px;
+
+  background-color: rgba(166, 203, 243, 0.55);
+  border-bottom: 1px solid rgba(21, 24, 31, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+/* ✅ DEVOM wordmark */
+.nav__brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  text-decoration: none;
+  color: rgba(21, 24, 31, 0.92);
+
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 30px;
+
+  /* un peu de présence */
+  text-shadow: 0 10px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* Liens desktop */
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nav__link {
+  color: rgba(21, 24, 31, 0.78);
+  font-weight: 700;
+  padding: 10px 12px;
+  border-radius: 999px;
+}
+
+.nav__link.active {
+  color: rgba(21, 24, 31, 0.92);
+  background-color: rgba(166, 203, 243, 0.55);
+  border: 1px solid rgba(21, 24, 31, 0.08);
+}
+
+/* Burger */
+.nav__burger {
+  display: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  border: 1px solid rgba(21, 24, 31, 0.12);
+  background: #1545a5;
+}
+
+.nav__burgerLines {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: white;
+  margin: 0 auto;
+  position: relative;
+}
+
+.nav__burgerLines::before,
+.nav__burgerLines::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 2px;
+  background: white;
+}
+
+.nav__burgerLines::before { top: -7px; }
+.nav__burgerLines::after { top: 7px; }
+
+/* Mobile full-screen overlay */
+.nav__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(255, 252, 248, 0.96);
+  display: none;
+}
+
+.nav__overlay.is-open { display: block; }
+
+.nav__panel {
+  height: 100dvh;
+  width: 100%;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: navPanelIn 180ms ease-out both;
+}
+
+@keyframes navPanelIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.nav__panelTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav__panelBrand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+  font-weight: 900;
+  color: rgba(21, 24, 31, 0.92);
+}
+
+.nav__panelWordmark {
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.nav__close {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  border: 1px solid rgba(21, 24, 31, 0.12);
+  background: #fff;
+  color: rgba(21, 24, 31, 0.92);
+  font-size: 18px;
+}
+
+.nav__panelLinks {
+  display: grid;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.nav__panelLink {
+  padding: 16px 14px;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid rgba(21, 24, 31, 0.10);
+  color: rgba(21, 24, 31, 0.92);
+  font-weight: 800;
+}
+
+.nav__panelLink.active {
+  background: linear-gradient(135deg, rgba(243, 183, 166, 0.55), rgba(185, 214, 198, 0.55));
+  border-color: rgba(21, 24, 31, 0.10);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .nav__links { display: none; }
+  .nav__burger { display: inline-flex; align-items: center; justify-content: center; }
+
+  .nav__bar {
+    padding: 16px;
+    min-height: 86px;
+  }
+
+  .nav__brand {
+    font-size: 24px;
+    letter-spacing: 0.18em;
+  }
+}
+
+
+
+
+

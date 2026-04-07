@@ -1,0 +1,164 @@
+/* src/pages/About.css ou src/components/About.css */
+
+.about {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 5rem;
+}
+
+.about-hero {
+  text-align: left;
+  margin-bottom: 3rem;
+}
+
+.about-tagline {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin-bottom: 0.5rem;
+}
+
+.about-title {
+  font-size: 2.2rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.about-intro {
+  max-width: 650px;
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.about-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 3rem;
+}
+
+.about-card {
+  padding: 1.8rem 1.6rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
+}
+
+.about-card h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.about-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.about-card li {
+  position: relative;
+  padding-left: 1.1rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.about-card li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0.6;
+}
+
+.about-stack {
+  margin-bottom: 3rem;
+}
+
+.about-stack h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.about-stack-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.about-stack-block {
+  padding: 1.4rem 1.3rem;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  background: rgba(250, 250, 250, 0.9);
+}
+
+.about-stack-block h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+}
+
+.about-stack-block p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.about-cta {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.about-cta h2 {
+  font-size: 1.6rem;
+  margin-bottom: 0.8rem;
+}
+
+.about-cta p {
+  max-width: 550px;
+  margin: 0 auto 1.5rem;
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.about-cta-button {
+  display: inline-block;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+
+  /* adapte ces couleurs à ta charte */
+  background: #111827;
+  color: #ffffff;
+}
+
+.about-cta-button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  transition: all 0.18s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about {
+    padding: 3rem 1.2rem 4rem;
+  }
+
+  .about-title {
+    font-size: 1.8rem;
+  }
+
+  .about-grid,
+  .about-stack-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-hero {
+    text-align: left;
+  }
+}
