@@ -55,14 +55,7 @@ function Projects() {
                 ))}
               </div>
               <div className="project-links">
-                <a 
-                  href={project.githubLink} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="link-btn github-btn"
-                >
-                  GitHub
-                </a>
+              
                 <a 
                   href={project.liveLink} 
                   target="_blank" 

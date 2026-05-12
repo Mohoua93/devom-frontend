@@ -14,9 +14,8 @@
 
 /* --- Grille de projets --- */
 .projects-grid {
-  /* Crée une grille responsive : colonnes auto-adaptables, minimum 300px */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 30px; /* Espace entre les cartes */
   max-width: 1200px;
   margin: 0 auto;
@@ -95,7 +94,7 @@
   text-decoration: none;
   font-weight: bold;
   transition: background-color 0.3s ease;
-  flex-grow: 1; 
+  flex-grow: 1;
   text-align: center;
 }
 
@@ -115,4 +114,31 @@
 
 .live-btn:hover {
   background-color: #0056b3;
+}
+
+/* --- Responsive tablette --- */
+@media (max-width: 1024px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --- Responsive mobile --- */
+@media (max-width: 600px) {
+  .projects-container {
+    padding: 40px 15px;
+  }
+
+  .projects-container h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-links {
+    flex-direction: column;
+  }
 }

@@ -5,17 +5,15 @@
     "image": "/images/logo-cdc.png",
     "description": "Création de site web pour une associations humanitaires qui oeuvre princiapelement en Afrique et en Asie, auprès des plus démunies.",
     "technologies": ["HTML", "CSS", "JavaScript", "React"],
-    "githubLink": "https://github.com/Mohoua93/colis-du-coeur-frontend.git",
     "liveLink": "https://www.colisducoeur.fr/"
   },
   {
     "id": 2,
-    "title": "Dress Hype",
-    "image": "/images/logo-DH.png",
-    "description": "Site e-commerce.",
-    "technologies": ["Shopify"],
-    "githubLink": "https://github.com/votre-nom/repo-2",
-    "liveLink": "https://dresshypee.com"
+    "title": "CBM Services & Car",
+    "image": "/images/logo CBM transp.png",
+    "description": "Site de réservation de chauffeurs privés de luxe pour les particuliers et les professionnels.",
+    "technologies": ["HTML", "CSS", "JavaScript", "React"],
+    "liveLink": "https://www.cbmservicesandcar.fr"
   },
   {
     "id": 3,
@@ -23,5 +21,15 @@
     "image": "/images/logo-MBP.png",
     "description": "E-commerce en cours de création.",
     "technologies": ["Shopify"]
+  },
+  {
+    "id": 4,
+    "title": "Maison de l'horlogerie",
+    "image": "/images/logo-MDH.png",
+    "description": "Site d'entretien et de réparation d'horloge ancienne",
+    "technologies": ["HTML", "CSS", "JavaScript", "React"],
+    "liveLink": "https://www.maisondelhorlogerie.fr"
   }
+
+
 ]
