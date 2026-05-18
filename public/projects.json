@@ -19,14 +19,14 @@
     "id": 3,
     "title": "Ma Biche Paris",
     "image": "/images/logo-MBP.png",
-    "description": "E-commerce en cours de création.",
+    "description": "E-commerce de prêt à porter homme femme enfant et accessoires en cours de création.",
     "technologies": ["Shopify"]
   },
   {
     "id": 4,
     "title": "Maison de l'horlogerie",
     "image": "/images/logo-MDH.png",
-    "description": "Site d'entretien et de réparation d'horloge ancienne",
+    "description": "Site de renovation, restauration et entretien d'horloge ancienne",
     "technologies": ["HTML", "CSS", "JavaScript", "React"],
     "liveLink": "https://www.maisondelhorlogerie.fr"
   }
