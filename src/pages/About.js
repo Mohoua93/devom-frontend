@@ -1,85 +1,165 @@
-// src/pages/About.jsx (ou src/components/About.jsx selon ton arbo)
 import React from "react";
 import "../styles/About.css";
 
 const About = () => {
   return (
-    <main className="about">
+    <main className="about-page">
       <section className="about-hero">
-        <p className="about-tagline">Studio web freelance</p>
-        <h1 className="about-title">DEVOM, création de sites web sur-mesure</h1>
-        <p className="about-intro">
-          DEVOM est une jeune société spécialisée dans la création de sites web
-          modernes, performants et pensés pour votre business. J&apos;accompagne
-          les entreprises, indépendants et créateurs de marques dans leur
-          présence en ligne, de l&apos;idée jusqu&apos;au lancement.
-        </p>
-      </section>
+        <div className="about-hero__inner">
+          <div className="about-hero__content">
+            <p className="about-label">Studio web freelance</p>
 
-      <section className="about-grid">
-        <article className="about-card">
-          <h2>Ce que je propose</h2>
-          <ul>
-            <li>Sites vitrines sur-mesure pour présenter votre activité</li>
-            <li>Sites e-commerce personnalisés</li>
-            <li>Boutiques en ligne via Shopify</li>
-            <li>Refonte et modernisation de sites existants</li>
-            <li>Optimisation SEO pour gagner en visibilité</li>
-          </ul>
-        </article>
+            <h1>DEVOM, création de sites web sur-mesure</h1>
 
-        <article className="about-card">
-          <h2>Ma façon de travailler</h2>
-          <ul>
-            <li>Écoute de vos besoins et de votre cible</li>
-            <li>Conseils sur la structure, le contenu et l&apos;UX</li>
-            <li>Développement propre, maintenable et évolutif</li>
-            <li>Accompagnement au déploiement et aux mises à jour</li>
-          </ul>
-        </article>
-      </section>
-
-      <section className="about-stack">
-        <h2>Compétences & stack technique</h2>
-        <div className="about-stack-grid">
-          <div className="about-stack-block">
-            <h3>Front-end</h3>
             <p>
-              HTML5, CSS3, JavaScript, React. Je développe des interfaces
-              responsives, rapides et adaptées au mobile.
+              J’accompagne les entreprises, indépendants et créateurs de marques
+              dans la création de sites web modernes, performants et pensés pour
+              convertir.
             </p>
           </div>
-          <div className="about-stack-block">
-            <h3>Back-end & données</h3>
+
+          <div className="about-hero__card">
+            <span className="about-hero__card-label">DEVOM</span>
+            <h2>Des sites web clairs, rapides et professionnels.</h2>
             <p>
-              Développement full-stack et gestion des données avec MongoDB pour
-              des applications flexibles et performantes.
-            </p>
-          </div>
-          <div className="about-stack-block">
-            <h3>Versionning & workflow</h3>
-            <p>
-              Utilisation de Git et GitHub pour suivre les évolutions, 
-              collaborer proprement et sécuriser le code.
-            </p>
-          </div>
-          <div className="about-stack-block">
-            <h3>SEO & performance</h3>
-            <p>
-              Optimisation technique (structure, temps de chargement, balises)
-              pour améliorer le référencement naturel.
+              De l’idée jusqu’au lancement, je vous aide à construire une
+              présence en ligne solide, élégante et adaptée à votre activité.
             </p>
           </div>
         </div>
       </section>
 
+      <section className="about-services">
+        <div className="about-section-heading">
+          <p className="about-label">Expertise</p>
+          <h2>Ce que je peux créer pour vous</h2>
+        </div>
+
+        <div className="about-services__grid">
+          <article className="about-card">
+            <span>01</span>
+            <h3>Site vitrine</h3>
+            <p>
+              Un site professionnel pour présenter votre activité, vos services
+              et rassurer vos futurs clients.
+            </p>
+          </article>
+
+          <article className="about-card">
+            <span>02</span>
+            <h3>E-commerce</h3>
+            <p>
+              Une boutique en ligne claire, responsive et pensée pour faciliter
+              l’achat sur mobile comme sur ordinateur.
+            </p>
+          </article>
+
+          <article className="about-card">
+            <span>03</span>
+            <h3>Shopify</h3>
+            <p>
+              Création, personnalisation et optimisation de boutiques Shopify
+              pour vendre efficacement en ligne.
+            </p>
+          </article>
+
+          <article className="about-card">
+            <span>04</span>
+            <h3>Refonte web</h3>
+            <p>
+              Modernisation d’un site existant pour améliorer son design, sa
+              structure, sa vitesse et son image.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section className="about-method">
+        <div className="about-method__content">
+          <p className="about-label">Méthode</p>
+          <h2>Une approche simple, claire et orientée résultat</h2>
+          <p>
+            Chaque projet commence par une compréhension précise de votre
+            activité, de votre cible et de vos objectifs. L’objectif est de
+            créer un site utile, propre, esthétique et facile à faire évoluer.
+          </p>
+        </div>
+
+        <div className="about-method__steps">
+          <div className="about-step">
+            <span>01</span>
+            <div>
+              <h3>Analyse du besoin</h3>
+              <p>Objectifs, cible, contenu, pages nécessaires et direction visuelle.</p>
+            </div>
+          </div>
+
+          <div className="about-step">
+            <span>02</span>
+            <div>
+              <h3>Structure & design</h3>
+              <p>Organisation claire des sections et création d’une interface moderne.</p>
+            </div>
+          </div>
+
+          <div className="about-step">
+            <span>03</span>
+            <div>
+              <h3>Développement</h3>
+              <p>Code propre, responsive, maintenable et adapté aux performances.</p>
+            </div>
+          </div>
+
+          <div className="about-step">
+            <span>04</span>
+            <div>
+              <h3>Lancement</h3>
+              <p>Mise en ligne, tests finaux et accompagnement après livraison.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="about-stack">
+        <div className="about-section-heading">
+          <p className="about-label">Stack technique</p>
+          <h2>Des technologies modernes pour des projets solides</h2>
+        </div>
+
+        <div className="about-stack__grid">
+          <article className="about-stack-card">
+            <h3>Front-end</h3>
+            <p>HTML5, CSS3, JavaScript, React</p>
+          </article>
+
+          <article className="about-stack-card">
+            <h3>Back-end & données</h3>
+            <p>Node.js, Express, MongoDB</p>
+          </article>
+
+          <article className="about-stack-card">
+            <h3>Workflow</h3>
+            <p>Git, GitHub, déploiement web</p>
+          </article>
+
+          <article className="about-stack-card">
+            <h3>SEO & performance</h3>
+            <p>Structure propre, vitesse, responsive, balises</p>
+          </article>
+        </div>
+      </section>
+
       <section className="about-cta">
-        <h2>Un projet en tête&nbsp;?</h2>
-        <p>
-          Que ce soit pour créer un nouveau site, lancer une boutique en ligne
-          ou redonner vie à un site existant, DEVOM peut vous accompagner.
-        </p>
-        <a href="/contact" className="about-cta-button">
+        <div>
+          <p className="about-label">Projet web</p>
+          <h2>Vous avez un projet en tête ?</h2>
+          <p>
+            Que ce soit pour créer un nouveau site, lancer une boutique en ligne
+            ou moderniser votre présence actuelle, DEVOM peut vous accompagner.
+          </p>
+        </div>
+
+        <a href="/contact" className="about-cta__button">
           Discutons de votre projet
         </a>
       </section>
