@@ -1,6 +1,6 @@
 // src/components/Projects.js
-import React, { useState, useEffect } from 'react';
-import '../styles/Projects.css'; // Assurez-vous que ce fichier existe
+import React, { useEffect, useState } from "react";
+import "../styles/Projects.css";
 
 function Projects() {
   const [projects, setProjects] = useState([]);
@@ -8,68 +8,125 @@ function Projects() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Le chemin a été ajusté en fonction de notre dernière discussion
-    fetch('/projects.json') 
-      .then(response => {
+    fetch("/projects.json")
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Erreur réseau lors du chargement des projets.");
         }
+
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         setProjects(data);
         setLoading(false);
       })
-      .catch(error => {
-        console.error("Failed to fetch projects:", error);
-        setError("Erreur lors du chargement des projets.");
+      .catch((error) => {
+        console.error("Erreur projets :", error);
+        setError("Impossible de charger les projets pour le moment.");
         setLoading(false);
       });
-  }, []); 
+  }, []);
 
   if (loading) {
-    return <div className="projects-container">Chargement des projets...</div>;
+    return (
+      <main className="projects-page">
+        <div className="projects-state">
+          <span className="projects-loader" />
+          <p>Chargement des projets...</p>
+        </div>
+      </main>
+    );
   }
 
   if (error) {
-    return <div className="projects-container error">{error}</div>;
+    return (
+      <main className="projects-page">
+        <div className="projects-state projects-state--error">
+          <p>{error}</p>
+        </div>
+      </main>
+    );
   }
 
   return (
-    <section id="projects" className="projects-container">
-      <h2>Mes Projets</h2>
-      <div className="projects-grid">
-        {projects.map(project => (
-          <div key={project.id} className="project-card">
-            <img 
-              src={project.image} 
-              alt={`Capture d'écran de ${project.title}`} 
-              className="project-image" 
-            />
-            <div className="project-info">
-              <h3>{project.title}</h3>
-              <p className="project-description">{project.description}</p>
-              <div className="project-techs">
-                {project.technologies.map((tech, index) => (
-                  <span key={index} className="tech-badge">{tech}</span>
-                ))}
-              </div>
-              <div className="project-links">
-              
-                <a 
-                  href={project.liveLink} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="link-btn live-btn"
-                >
-                  Démo Live
-                </a>
-              </div>
-            </div>
+    <main className="projects-page">
+      <section className="projects-hero">
+        <div className="projects-hero__inner">
+          <div className="projects-hero__content">
+            <p className="projects-label">Portfolio</p>
+
+            <h1 style = {{ fontSize: 'clamp(2.6rem, 6vw, 5.6rem)' }}>Mes réalisations web</h1>
+
+            <p>
+              Une sélection de projets conçus pour présenter une activité,
+              valoriser une marque et offrir une expérience claire sur tous les
+              écrans.
+            </p>
           </div>
-        ))}
-      </div>
-    </section>
+        </div>
+      </section>
+
+      <section className="projects-grid-section">
+        <div className="projects-grid">
+          {projects.map((project, index) => (
+            <article className="project-card" key={project.id || project.title}>
+              <div className="project-card__imageBox">
+                <img
+                  src={project.image}
+                  alt={`Projet ${project.title}`}
+                  className="project-card__image"
+                />
+              </div>
+
+              <div className="project-card__content">
+                <p className="project-card__category">
+                  {String(index + 1).padStart(2, "0")} —{" "}
+                  {project.category || "Projet web"}
+                </p>
+
+                <h2>{project.title}</h2>
+
+                <p className="project-card__description">
+                  {project.description}
+                </p>
+
+                {project.technologies?.length > 0 && (
+                  <div className="project-card__techs">
+                    {project.technologies.map((tech) => (
+                      <span key={tech}>{tech}</span>
+                    ))}
+                  </div>
+                )}
+
+                <div className="project-card__actions">
+                  {project.liveLink && (
+                    <a
+                      href={project.liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="project-card__btn"
+                    >
+                      Voir le projet
+                    </a>
+                  )}
+
+                  {project.githubLink && (
+                    <a
+                      href={project.githubLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="project-card__btn project-card__btn--ghost"
+                    >
+                      Code source
+                    </a>
+                  )}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    </main>
   );
 }
 
