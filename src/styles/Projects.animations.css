@@ -1,0 +1,209 @@
+/* =====================================================================
+   DEVOM — Projects.animations.css
+   ---------------------------------------------------------------------
+   Couche d'animations ADDITIVE pour la page Projets.
+
+   - Ne modifie NI Projects.js NI Projects.css.
+   - 100% CSS, aucun JavaScript.
+   - Réversible : supprime l'import + ce fichier => site d'origine intact.
+   - Préserve TES hovers existants (lift carte, zoom image, boutons).
+   - Respecte prefers-reduced-motion (le spinner de chargement reste actif).
+
+   POUR L'ACTIVER : dans Projects.js, juste après
+       import "../styles/Projects.css";
+   ajoute :
+       import "../styles/Projects.animations.css";
+
+   (Préfixe "devomp-" sur les keyframes pour éviter tout conflit avec
+    les animations des autres pages dans une SPA.)
+   ===================================================================== */
+
+
+/* =====================================================================
+   1. KEYFRAMES
+   ===================================================================== */
+
+/* Montée + fondu (hero au chargement) */
+@keyframes devomp-rise {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Révélation douce au scroll : fondu + léger flou.
+   N'utilise NI transform NI clip-path -> ne bloque aucun hover et
+   ne découpe pas la box-shadow des cartes. */
+@keyframes devomp-soft-reveal {
+  from { opacity: 0; filter: blur(7px); }
+  to   { opacity: 1; filter: blur(0); }
+}
+
+/* Reflet qui balaie les boutons au survol */
+@keyframes devomp-shine {
+  from { transform: translateX(-180%) skewX(-18deg); }
+  to   { transform: translateX(220%)  skewX(-18deg); }
+}
+
+/* Halo pulsé autour du spinner de chargement */
+@keyframes devomp-loader-glow {
+  0%   { transform: scale(0.7); opacity: 0.6; }
+  70%  { transform: scale(1.4); opacity: 0; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+/* Respiration du texte de chargement */
+@keyframes devomp-text-pulse {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
+
+/* Apparition de l'état (chargement / erreur) */
+@keyframes devomp-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+
+/* =====================================================================
+   2. ENTRÉE DU HERO (au chargement)
+   fill-mode "backwards" : caché AVANT (pas de flash), retour au style
+   de base APRÈS.
+   ===================================================================== */
+
+.projects-label {
+  animation: devomp-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.05s backwards;
+}
+.projects-hero h1 {
+  animation: devomp-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.18s backwards;
+}
+.projects-hero p {
+  animation: devomp-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.34s backwards;
+}
+
+
+/* =====================================================================
+   3. RÉVÉLATION DES CARTES AU SCROLL
+   Encapsulé dans @supports : si le navigateur ne gère pas les
+   animations pilotées par le scroll, les cartes restent visibles.
+
+   On utilise opacity + blur (jamais transform) :
+   -> le lift de la carte ET le zoom de l'image au survol restent intacts.
+   ===================================================================== */
+
+@supports (animation-timeline: view()) {
+  .project-card {
+    animation: devomp-soft-reveal 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-timeline: view();
+    animation-range: entry 5% cover 30%;
+    will-change: opacity, filter;
+  }
+
+  /* Grille 2 colonnes : on décale légèrement la colonne de droite
+     pour une cascade gauche -> droite à chaque rangée. */
+  .project-card:nth-child(even) {
+    animation-range: entry 9% cover 34%;
+  }
+}
+
+
+/* =====================================================================
+   4. MICRO-INTERACTIONS AU SURVOL (additives)
+   ===================================================================== */
+
+/* Boutons pleins : reflet qui balaie au survol.
+   (le translateY au survol reste géré par Projects.css)
+   On exclut le bouton fantôme (transparent). */
+.project-card__btn:not(.project-card__btn--ghost) {
+  position: relative;
+  overflow: hidden;
+}
+.project-card__btn:not(.project-card__btn--ghost)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+  transform: translateX(-180%) skewX(-18deg);
+  pointer-events: none;
+}
+.project-card__btn:not(.project-card__btn--ghost):hover::after {
+  animation: devomp-shine 0.9s ease;
+}
+
+/* Tags techno : aucun hover à l'origine -> on en ajoute un discret. */
+.project-card__techs span {
+  transition: transform 0.2s ease, border-color 0.2s ease,
+              background 0.2s ease, color 0.2s ease;
+}
+.project-card__techs span:hover {
+  transform: translateY(-2px);
+  border-color: rgba(56, 189, 248, 0.5);
+  background: rgba(56, 189, 248, 0.16);
+  color: #e0f2fe;
+}
+
+/* Catégorie de la carte : léger glissement quand on survole la carte. */
+.project-card__category {
+  transition: transform 0.28s ease, color 0.28s ease;
+}
+.project-card:hover .project-card__category {
+  transform: translateX(4px);
+  color: #7dd3fc;
+}
+
+
+/* =====================================================================
+   5. ÉTAT DE CHARGEMENT (amélioré)
+   On ne touche PAS au spinner (.projects-loader garde son animation
+   projects-spin). On ajoute seulement un halo pulsé derrière, une
+   respiration du texte, et un fondu d'apparition de l'état.
+   ===================================================================== */
+
+.projects-state {
+  animation: devomp-fade 0.5s ease backwards;
+}
+
+.projects-loader {
+  position: relative;
+}
+.projects-loader::after {
+  content: "";
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.35), transparent 70%);
+  z-index: -1;
+  animation: devomp-loader-glow 1.5s ease-out infinite;
+}
+
+/* Respiration du texte de chargement uniquement (pas le message d'erreur). */
+.projects-state:not(.projects-state--error) p {
+  animation: devomp-text-pulse 1.6s ease-in-out infinite;
+}
+
+
+/* =====================================================================
+   6. ACCESSIBILITÉ — prefers-reduced-motion
+   On neutralise les animations décoratives, MAIS on conserve le
+   spinner de chargement (feedback essentiel pour l'utilisateur).
+   ===================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .projects-page *,
+  .projects-page *::before,
+  .projects-page *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* On réactive uniquement le spinner (retour d'info de chargement). */
+  .projects-loader {
+    animation: projects-spin 0.8s linear infinite !important;
+  }
+}

@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import "../styles/Contact.css";
+import "../styles/Contact.animations.css";
 
 // CRA: REACT_APP_API_URL ; Vite: VITE_API_URL
 const API_BASE =

@@ -1,5 +1,6 @@
 // src/components/Projects.js
 import React, { useEffect, useState } from "react";
+import "../styles/Projects.animations.css";
 import "../styles/Projects.css";
 
 function Projects() {

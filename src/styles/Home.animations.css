@@ -1,0 +1,315 @@
+/* =====================================================================
+   DEVOM — Home.animations.css
+   ---------------------------------------------------------------------
+   Couche d'animations ADDITIVE pour la page d'accueil.
+
+   - Ne modifie NI Home.jsx NI Home.css : ce fichier vient seulement
+     se greffer sur les classes déjà existantes.
+   - 100% CSS, aucun JavaScript.
+   - Réversible : supprime l'import + ce fichier => site d'origine intact.
+   - Respecte prefers-reduced-motion (accessibilité, tout en bas).
+
+   POUR L'ACTIVER : dans Home.jsx, juste après
+       import "../styles/Home.css";
+   ajoute :
+       import "../styles/Home.animations.css";
+   ===================================================================== */
+
+
+/* =====================================================================
+   1. KEYFRAMES
+   ===================================================================== */
+
+/* Montée + fondu (utilisé pour le hero au chargement) */
+@keyframes devom-rise {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Variante plus courte (stats, petits éléments) */
+@keyframes devom-rise-sm {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Apparition "pop" avec un léger zoom (cartes du visuel) */
+@keyframes devom-pop {
+  from { opacity: 0; transform: translateY(22px) scale(0.94); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Respiration verticale continue (cartes décoratives) */
+@keyframes devom-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-9px); }
+}
+@keyframes devom-float-soft {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-13px); }
+}
+
+/* Halo lumineux du hero : apparition puis pulsation lente */
+@keyframes devom-glow-in {
+  from { opacity: 0; transform: scale(0.7); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes devom-glow-pulse {
+  0%, 100% { transform: scale(1);    opacity: 0.85; }
+  50%      { transform: scale(1.09); opacity: 1; }
+}
+
+/* Révélation au scroll par montée (éléments SANS hover sur transform) */
+@keyframes devom-reveal {
+  from { opacity: 0; transform: translateY(42px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Révélation au scroll par "rideau" (laisse le transform LIBRE pour les
+   éléments qui ont déjà un effet de survol sur transform : cartes, etc.) */
+@keyframes devom-reveal-clip-28 {
+  from { opacity: 0; clip-path: inset(0 0 100% 0 round 28px); }
+  to   { opacity: 1; clip-path: inset(0 0 0    0 round 28px); }
+}
+@keyframes devom-reveal-clip-22 {
+  from { opacity: 0; clip-path: inset(0 0 100% 0 round 22px); }
+  to   { opacity: 1; clip-path: inset(0 0 0    0 round 22px); }
+}
+
+/* Bouton WhatsApp : entrée + anneau pulsé */
+@keyframes devom-wa-pop {
+  from { opacity: 0; transform: scale(0); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes devom-wa-ring {
+  0%   { transform: scale(1);   opacity: 0.55; }
+  70%  { transform: scale(1.9); opacity: 0; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+/* Reflet qui balaie le bouton principal au survol */
+@keyframes devom-shine {
+  from { transform: translateX(-180%) skewX(-18deg); }
+  to   { transform: translateX(220%)  skewX(-18deg); }
+}
+
+
+/* =====================================================================
+   2. ENTRÉE DU HERO (au chargement de la page)
+   fill-mode "backwards" : invisible AVANT (pas de flash), puis retour
+   au style de base APRÈS -> les hovers restent pleinement fonctionnels.
+   ===================================================================== */
+
+.home-hero__label {
+  animation: devom-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.05s backwards;
+}
+.home-hero h1 {
+  animation: devom-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.18s backwards;
+}
+.home-hero__description {
+  animation: devom-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.34s backwards;
+}
+.home-hero__actions {
+  animation: devom-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.5s backwards;
+}
+
+/* Les 3 statistiques arrivent en cascade */
+.home-hero__stats div {
+  animation: devom-rise-sm 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+.home-hero__stats div:nth-child(1) { animation-delay: 0.64s; }
+.home-hero__stats div:nth-child(2) { animation-delay: 0.76s; }
+.home-hero__stats div:nth-child(3) { animation-delay: 0.88s; }
+
+
+/* =====================================================================
+   3. VISUEL DU HERO (halo + cartes en verre)
+   ===================================================================== */
+
+/* Halo : apparition douce puis pulsation infinie */
+.home-hero__visual::before {
+  animation:
+    devom-glow-in   1.1s ease 0.3s backwards,
+    devom-glow-pulse 6s   ease-in-out 1.4s infinite;
+}
+
+/* Carte principale : entrée "pop" (pas de flottement -> texte stable) */
+.home-card--main {
+  animation: devom-pop 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.45s backwards;
+}
+
+/* Petite carte "Performance" : entrée puis flottement doux */
+.home-card--small:not(.home-card--dark) {
+  will-change: transform;
+  animation:
+    devom-pop   0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.65s backwards,
+    devom-float 6s   ease-in-out 1.6s infinite;
+}
+
+/* Carte sombre "Objectif" : entrée puis flottement (rythme différent) */
+.home-card--dark {
+  will-change: transform;
+  animation:
+    devom-pop        0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.8s backwards,
+    devom-float-soft 7.5s ease-in-out 1.8s infinite;
+}
+
+
+/* =====================================================================
+   4. RÉVÉLATIONS AU SCROLL (services, "pourquoi", CTA)
+   Encapsulé dans @supports : si le navigateur ne gère pas les
+   animations pilotées par le scroll, le contenu reste simplement
+   visible (aucun contenu caché).
+   ===================================================================== */
+
+@supports (animation-timeline: view()) {
+
+  /* En-tête de la section services + titre du bloc "Pourquoi" + CTA :
+     montée simple (ces blocs n'ont pas de hover sur transform). */
+  .home-section__header,
+  .home-section--split > div:first-child,
+  .home-cta {
+    animation: devom-reveal 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-timeline: view();
+    animation-range: entry 4% cover 32%;
+  }
+
+  /* Cartes de services : révélation "rideau" pour NE PAS bloquer
+     l'effet de survol (translateY) déjà présent dans Home.css.
+     Décalage progressif -> cascade de gauche à droite. */
+  .service-card {
+    animation: devom-reveal-clip-28 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-timeline: view();
+    animation-range: entry 6% cover 30%;
+  }
+  .service-card:nth-child(2) { animation-range: entry 11% cover 35%; }
+  .service-card:nth-child(3) { animation-range: entry 16% cover 40%; }
+  .service-card:nth-child(4) { animation-range: entry 21% cover 45%; }
+
+  /* Points forts : révélation "rideau" (transform libre pour le hover
+     que l'on ajoute plus bas). Cascade naturelle car empilés. */
+  .strength-item {
+    animation: devom-reveal-clip-22 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-timeline: view();
+    animation-range: entry 8% cover 34%;
+  }
+}
+
+
+/* =====================================================================
+   5. MICRO-INTERACTIONS AU SURVOL (additives)
+   On n'écrase aucun hover existant : on ajoute des propriétés
+   complémentaires.
+   ===================================================================== */
+
+/* Bouton principal : reflet qui balaie la surface au survol.
+   (translateY au survol reste géré par Home.css) */
+.home-btn--primary {
+  position: relative;
+  overflow: hidden;
+}
+.home-btn--primary::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+  transform: translateX(-180%) skewX(-18deg);
+  pointer-events: none;
+}
+.home-btn--primary:hover::after {
+  animation: devom-shine 0.9s ease;
+}
+
+/* Cartes de services : on AJOUTE une lueur (box-shadow) au survol +
+   un léger déplacement du numéro. Le lift translateY vient de Home.css. */
+.service-card:hover {
+  box-shadow: 0 26px 64px rgba(56, 189, 248, 0.18);
+}
+.service-card__number {
+  transition: transform 0.25s ease, letter-spacing 0.25s ease, color 0.25s ease;
+}
+.service-card:hover .service-card__number {
+  transform: translateX(5px);
+  letter-spacing: 0.05em;
+  color: #7dd3fc;
+}
+
+/* Points forts : aucun hover défini à l'origine -> on en ajoute un. */
+.strength-item {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.3s ease, background 0.3s ease;
+}
+.strength-item:hover {
+  transform: translateX(7px);
+  border-color: rgba(56, 189, 248, 0.32);
+  background: rgba(15, 23, 42, 0.72);
+}
+
+/* Statistiques du hero : léger relèvement au survol (additif). */
+.home-hero__stats div {
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+.home-hero__stats div:hover {
+  transform: translateY(-4px);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+
+/* =====================================================================
+   6. BOUTON WHATSAPP : entrée + anneau pulsé
+   ===================================================================== */
+
+.whatsapp-fixed-button {
+  animation: devom-wa-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 1.1s backwards;
+}
+/* Anneau qui se diffuse derrière le bouton pour attirer l'œil. */
+.whatsapp-fixed-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #25d366;
+  z-index: -1;
+  animation: devom-wa-ring 2.6s ease-out 2s infinite;
+}
+
+
+/* =====================================================================
+   7. ADAPTATIONS MOBILE
+   Sur petit écran, les cartes du hero passent en pile : on coupe le
+   flottement continu (mouvement inutile/distrayant une fois empilées),
+   on garde uniquement l'entrée.
+   ===================================================================== */
+
+@media (max-width: 640px) {
+  .home-card--small:not(.home-card--dark) {
+    animation: devom-pop 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.65s backwards;
+  }
+  .home-card--dark {
+    animation: devom-pop 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.8s backwards;
+  }
+}
+
+
+/* =====================================================================
+   8. ACCESSIBILITÉ — prefers-reduced-motion
+   Si l'utilisateur a désactivé les animations au niveau système,
+   on neutralise tout. Les éléments reviennent à leur style de base
+   (donc visibles : aucune opacité 0 n'est figée hors animation).
+   ===================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .home-page *,
+  .home-page *::before,
+  .home-page *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,157 @@
+
+
+/* Montée + fondu (hero au chargement) */
+@keyframes devomc-rise {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Révélation au scroll : fondu + flou (sans transform ni clip-path
+   -> hovers intacts et box-shadow préservée). */
+@keyframes devomc-soft {
+  from { opacity: 0; filter: blur(7px); }
+  to   { opacity: 1; filter: blur(0); }
+}
+
+/* Reflet qui balaie le bouton au survol */
+@keyframes devomc-shine {
+  from { transform: translateX(-180%) skewX(-18deg); }
+  to   { transform: translateX(220%)  skewX(-18deg); }
+}
+
+/* Apparition du message de statut après envoi */
+@keyframes devomc-status-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Respiration douce du bouton pendant l'envoi */
+@keyframes devomc-pulse {
+  0%, 100% { opacity: 0.6; }
+  50%      { opacity: 0.85; }
+}
+
+
+/* =====================================================================
+   2. ENTRÉE DU HERO (au chargement)
+   fill-mode "backwards" : caché AVANT, retour au style de base APRÈS.
+   ===================================================================== */
+
+.contact-hero .contact-label {
+  animation: devomc-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.05s backwards;
+}
+.contact-hero__content h1 {
+  animation: devomc-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.18s backwards;
+}
+.contact-hero__content p:not(.contact-label) {
+  animation: devomc-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.34s backwards;
+}
+
+
+/* =====================================================================
+   3. RÉVÉLATION AU SCROLL DES DEUX CARTES
+   Encapsulé dans @supports : sans support, tout reste visible.
+   Fondu/flou -> aucune ombre découpée, aucun hover bloqué.
+   La carte de droite (formulaire) est légèrement décalée.
+   ===================================================================== */
+
+@supports (animation-timeline: view()) {
+  .contact-info,
+  .contact-form-card {
+    animation: devomc-soft 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-timeline: view();
+    animation-range: entry 5% cover 30%;
+    will-change: opacity, filter;
+  }
+
+  .contact-form-card {
+    animation-range: entry 9% cover 34%;
+  }
+}
+
+
+/* =====================================================================
+   4. MICRO-INTERACTIONS AU SURVOL / FOCUS (additives)
+   ===================================================================== */
+
+/* Cartes d'info (01/02/03) : aucun hover à l'origine -> on en ajoute un. */
+.contact-info__item {
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.28s ease, background 0.28s ease;
+}
+.contact-info__item:hover {
+  transform: translateX(6px);
+  border-color: rgba(56, 189, 248, 0.34);
+  background: rgba(56, 189, 248, 0.09);
+}
+.contact-info__item span {
+  transition: transform 0.28s ease, border-color 0.28s ease;
+}
+.contact-info__item:hover span {
+  transform: scale(1.08);
+  border-color: rgba(56, 189, 248, 0.5);
+}
+
+/* Champs du formulaire : le label s'illumine quand le champ est actif.
+   (le :focus des inputs reste géré par Contact.css) */
+.contact-form label {
+  transition: color 0.2s ease;
+}
+.contact-form__group:focus-within label {
+  color: #7dd3fc;
+}
+
+/* Bouton d'envoi : reflet qui balaie au survol (en plus du translateY). */
+.contact-form button {
+  position: relative;
+  overflow: hidden;
+}
+.contact-form button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+  transform: translateX(-180%) skewX(-18deg);
+  pointer-events: none;
+}
+.contact-form button:hover:not(:disabled)::after {
+  animation: devomc-shine 0.9s ease;
+}
+
+
+/* =====================================================================
+   5. ÉTATS DYNAMIQUES (envoi + statut)
+   ===================================================================== */
+
+/* Pendant l'envoi (bouton désactivé) : respiration douce pour signaler
+   l'activité. */
+.contact-form button:disabled {
+  animation: devomc-pulse 1.4s ease-in-out infinite;
+}
+
+/* Message de confirmation / erreur : apparition en douceur au montage. */
+.form-status {
+  animation: devomc-status-in 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+/* =====================================================================
+   6. ACCESSIBILITÉ — prefers-reduced-motion
+   ===================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-page *,
+  .contact-page *::before,
+  .contact-page *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
