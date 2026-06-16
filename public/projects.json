@@ -33,7 +33,7 @@
   {
     "id": 5,
     "title": "MBC Groupe",
-    "image": "/images/logo-MBC.png",
+    "image": "/images/logo-mbc.png",
     "description": "Site de société de recouvrement de créances pour les professionnels, pilotage financier et gestion de trésorerie, conseil en stratégie d'entreprises",
     "technologies": ["HTML", "CSS", "JavaScript", "React"],
     "liveLink": "https://www.mbcgroupe.fr"
