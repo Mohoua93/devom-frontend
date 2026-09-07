@@ -143,9 +143,9 @@
 }
 .project-card__techs span:hover {
   transform: translateY(-2px);
-  border-color: rgba(56, 189, 248, 0.5);
-  background: rgba(56, 189, 248, 0.16);
-  color: #e0f2fe;
+  border-color: rgba(185, 214, 198, 0.75);
+  background: rgba(185, 214, 198, 0.4);
+  color: #2f5540;
 }
 
 /* Catégorie de la carte : léger glissement quand on survole la carte. */
@@ -154,7 +154,7 @@
 }
 .project-card:hover .project-card__category {
   transform: translateX(4px);
-  color: #7dd3fc;
+  color: #b9764f;
 }
 
 
@@ -177,7 +177,7 @@
   position: absolute;
   inset: -12px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.35), transparent 70%);
+  background: radial-gradient(circle, rgba(243, 183, 166, 0.4), transparent 70%);
   z-index: -1;
   animation: devomp-loader-glow 1.5s ease-out infinite;
 }
