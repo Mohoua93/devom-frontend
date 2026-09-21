@@ -1,16 +1,80 @@
 import React, { useMemo, useState } from "react";
+
 import "../styles/Contact.css";
 import "../styles/Contact.animations.css";
 
-// CRA: REACT_APP_API_URL ; Vite: VITE_API_URL
-const API_BASE =
-  process.env.REACT_APP_API_URL ||
-  process.env.VITE_API_URL ||
-  (process.env.NODE_ENV === "production"
+const runtimeEnv = typeof process !== "undefined" ? process.env : {};
+
+const API_BASE = (
+  runtimeEnv.REACT_APP_API_URL ||
+  runtimeEnv.VITE_API_URL ||
+  (runtimeEnv.NODE_ENV === "production"
     ? "https://devom-backend.onrender.com"
-    : "http://localhost:3001");
+    : "http://localhost:3001")
+).replace(/\/+$/, "");
 
 const MAX_LEN = 5000;
+
+const ArrowUpRight = () => (
+  <svg
+    aria-hidden="true"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M7 17 17 7M8 7h9v9" stroke="currentColor" strokeWidth="1.8" />
+  </svg>
+);
+
+const MailIcon = () => (
+  <svg
+    aria-hidden="true"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M4 6.5h16v11H4v-11Zm.5.5 7.5 6 7.5-6"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const MessageIcon = () => (
+  <svg
+    aria-hidden="true"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M20 11.5a7.5 7.5 0 0 1-8.2 7.46A8.6 8.6 0 0 1 8 17.8L4 19l1.2-3.7A7.5 7.5 0 1 1 20 11.5Z"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const contactSteps = [
+  {
+    number: "01",
+    title: "Vous présentez votre besoin",
+    text: "Quelques lignes suffisent pour me parler de votre activité, de votre objectif et du site imaginé.",
+  },
+  {
+    number: "02",
+    title: "Nous échangeons sur le projet",
+    text: "Je reviens vers vous pour clarifier les priorités, le périmètre, les délais et les prochaines étapes.",
+  },
+  {
+    number: "03",
+    title: "Vous recevez une proposition claire",
+    text: "Une solution adaptée à votre besoin, accompagnée d’un cadre précis pour avancer sereinement.",
+  },
+];
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -20,7 +84,11 @@ export default function Contact() {
     website: "",
   });
 
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState({
+    type: "",
+    message: "",
+  });
+
   const [loading, setLoading] = useState(false);
 
   const remaining = useMemo(
@@ -28,144 +96,300 @@ export default function Contact() {
     [formData.message]
   );
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const whatsappMessage = encodeURIComponent(
+    "Bonjour 👋 je viens de votre site DEVOM. J’aimerais discuter d’un projet web."
+  );
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
 
     if (name === "message" && value.length > MAX_LEN) return;
 
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((previousData) => ({
+      ...previousData,
+      [name]: value,
+    }));
+
+    if (status.type === "error" || status.type === "success") {
+      setStatus({
+        type: "",
+        message: "",
+      });
+    }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
     if (loading) return;
 
     if (formData.website) {
-      setStatus("✅ Message envoyé avec succès !");
-      setFormData({ name: "", email: "", message: "", website: "" });
+      setStatus({
+        type: "success",
+        message: "Votre message a bien été envoyé.",
+      });
+
+      setFormData({
+        name: "",
+        email: "",
+        message: "",
+        website: "",
+      });
+
       return;
     }
 
-    setStatus("Envoi en cours...");
+    const name = formData.name.trim();
+    const email = formData.email.trim();
+    const message = formData.message.trim();
+
+    if (!name || !email || !message) {
+      setStatus({
+        type: "error",
+        message: "Merci de renseigner votre nom, votre email et votre message.",
+      });
+
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setStatus({
+        type: "error",
+        message: "Merci de saisir une adresse email valide.",
+      });
+
+      return;
+    }
+
+    setStatus({
+      type: "loading",
+      message: "Envoi de votre message...",
+    });
+
     setLoading(true);
 
     const controller = new AbortController();
-    const t = setTimeout(() => controller.abort(), 15000);
+    const timeoutId = window.setTimeout(() => controller.abort(), 15000);
 
     try {
-      const res = await fetch(`${API_BASE}/api/contact`, {
+      const response = await fetch(`${API_BASE}/api/contact`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          message: formData.message.trim(),
+          name,
+          email,
+          message,
         }),
         signal: controller.signal,
       });
 
-      clearTimeout(t);
-
       let data = {};
 
       try {
-        data = await res.json();
+        data = await response.json();
       } catch {
-        // Réponse non JSON
+        data = {};
       }
 
-      if (!res.ok) {
+      if (!response.ok) {
         throw new Error(data?.message || "Erreur serveur");
       }
 
-      setStatus("✅ Message envoyé avec succès !");
-      setFormData({ name: "", email: "", message: "", website: "" });
-    } catch (err) {
-      if (err.name === "AbortError") {
-        setStatus("❌ Délai dépassé. Réessaie dans un instant.");
-      } else {
-        setStatus(
-          "❌ Erreur réseau ou serveur. Merci de vérifier ta connexion et de réessayer."
-        );
+      setStatus({
+        type: "success",
+        message:
+          "Merci, votre message a bien été envoyé. Je vous répondrai rapidement.",
+      });
 
-        if (process.env.NODE_ENV !== "production") {
-          console.error("Contact error:", err);
+      setFormData({
+        name: "",
+        email: "",
+        message: "",
+        website: "",
+      });
+    } catch (error) {
+      if (error.name === "AbortError") {
+        setStatus({
+          type: "error",
+          message:
+            "Le délai d’envoi est dépassé. Merci de réessayer dans un instant.",
+        });
+      } else {
+        setStatus({
+          type: "error",
+          message:
+            "Une erreur empêche l’envoi du message. Vérifiez votre connexion puis réessayez.",
+        });
+
+        if (runtimeEnv.NODE_ENV !== "production") {
+          console.error("Contact error:", error);
         }
       }
     } finally {
-      clearTimeout(t);
+      window.clearTimeout(timeoutId);
       setLoading(false);
     }
   };
 
   return (
     <main className="contact-page">
-      <section className="contact-hero">
+      <section className="contact-hero" aria-labelledby="contact-main-title">
+        <div
+          className="contact-hero__orb contact-hero__orb--one"
+          aria-hidden="true"
+        />
+
+        <div
+          className="contact-hero__orb contact-hero__orb--two"
+          aria-hidden="true"
+        />
+
         <div className="contact-hero__inner">
           <div className="contact-hero__content">
-            <p className="contact-label">Contact</p>
+            <p className="contact-label">
+              <span aria-hidden="true" />
+              Contact · DEVOM Studio
+            </p>
 
-            <h1>Parlons de votre projet web</h1>
+            <h1 id="contact-main-title">
+              Donnons forme à
+              <span> votre prochain projet.</span>
+            </h1>
 
-            <p>
-              Vous souhaitez créer un site vitrine, une boutique en ligne ou
-              moderniser votre présence sur le web ? Envoyez-moi votre message,
-              je vous répondrai rapidement.
+            <p className="contact-hero__description">
+              Un site à créer, une identité à renforcer ou une expérience à
+              repenser ? Parlez-moi de votre besoin et construisons une solution
+              claire, moderne et réellement utile à votre activité.
             </p>
           </div>
+
+          <aside
+            className="contact-hero__panel"
+            aria-label="Disponibilité DEVOM"
+          >
+            <div className="contact-hero__panel-top">
+              <span className="contact-availability">
+                <i aria-hidden="true" />
+                Disponible
+              </span>
+
+              <span>DEVOM · 2026</span>
+            </div>
+
+            <p>
+              Chaque belle collaboration commence par une conversation simple.
+            </p>
+
+            <div className="contact-hero__facts">
+              <div>
+                <span>Réponse</span>
+                <strong>Rapide et personnalisée</strong>
+              </div>
+
+              <div>
+                <span>Échange</span>
+                <strong>Clair et sans engagement</strong>
+              </div>
+
+              <div>
+                <span>Approche</span>
+                <strong>Sur mesure</strong>
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
 
-      <section className="contact-section">
+      <section
+        className="contact-section"
+        aria-labelledby="contact-section-title"
+      >
         <div className="contact-section__inner">
           <div className="contact-info">
-            <p className="contact-label">DEVOM</p>
+            <span className="contact-section-index">
+              01 — PREMIER ÉCHANGE
+            </span>
 
-            <h2>Une demande claire, une réponse rapide.</h2>
+            <h2 id="contact-section-title">
+              Commençons par
+              <span> parler de votre idée.</span>
+            </h2>
 
-            <p>
-              Décrivez simplement votre besoin : type de site, objectif,
-              activité, délai souhaité ou budget approximatif. Plus votre
-              message est précis, plus je pourrai vous orienter efficacement.
+            <p className="contact-info__intro">
+              Décrivez simplement votre projet, même s’il n’est pas encore
+              totalement défini. Je vous aiderai à clarifier les priorités et à
+              choisir la solution la plus cohérente.
             </p>
 
-            <div className="contact-info__items">
-              <div className="contact-info__item">
-                <span>01</span>
-                <div>
-                  <h3>Création de site</h3>
-                  <p>Site vitrine, landing page, portfolio ou e-commerce.</p>
-                </div>
-              </div>
+            <div className="contact-channels">
+              <a href="mailto:oualid.mohamed.oualid@gmail.com">
+                <span className="contact-channel__icon">
+                  <MailIcon />
+                </span>
 
-              <div className="contact-info__item">
-                <span>02</span>
-                <div>
-                  <h3>Refonte web</h3>
-                  <p>Modernisation d’un site existant et amélioration UX.</p>
-                </div>
-              </div>
+                <span className="contact-channel__content">
+                  <small>Email</small>
+                  <strong>oualid.mohamed.oualid@gmail.com</strong>
+                </span>
 
-              <div className="contact-info__item">
-                <span>03</span>
-                <div>
-                  <h3>Accompagnement</h3>
-                  <p>Conseils, mise en ligne, corrections et optimisation.</p>
-                </div>
-              </div>
+                <ArrowUpRight />
+              </a>
+
+              <a
+                href={`https://wa.me/33781628093?text=${whatsappMessage}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="contact-channel__icon">
+                  <MessageIcon />
+                </span>
+
+                <span className="contact-channel__content">
+                  <small>WhatsApp</small>
+                  <strong>Démarrer une conversation</strong>
+                </span>
+
+                <ArrowUpRight />
+              </a>
+            </div>
+
+            <div className="contact-steps">
+              {contactSteps.map((step) => (
+                <article className="contact-step" key={step.number}>
+                  <span>{step.number}</span>
+
+                  <div>
+                    <h3>{step.title}</h3>
+                    <p>{step.text}</p>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
 
           <div className="contact-form-card">
-            <div className="contact-form-heading">
-              <p className="contact-label">Formulaire</p>
-              <h2>Envoyer un message</h2>
-            </div>
+            <header className="contact-form-heading">
+              <span className="contact-section-index">
+                02 — VOTRE PROJET
+              </span>
 
-            <form onSubmit={handleSubmit} noValidate className="contact-form">
+              <h2>Envoyez-moi votre message.</h2>
+
+              <p>
+                Quelques informations suffisent pour lancer la discussion.
+              </p>
+            </header>
+
+            <form
+              onSubmit={handleSubmit}
+              noValidate
+              className="contact-form"
+            >
               <div className="hp-field" aria-hidden="true">
                 <label htmlFor="website">Votre site web</label>
+
                 <input
                   type="text"
                   id="website"
@@ -177,57 +401,88 @@ export default function Contact() {
                 />
               </div>
 
-              <div className="contact-form__group">
-                <label htmlFor="name">Nom</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder="Votre nom"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  disabled={loading}
-                />
+              <div className="contact-form__row">
+                <div className="contact-form__group">
+                  <label htmlFor="name">Votre nom</label>
+
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Nom et prénom"
+                    autoComplete="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    disabled={loading}
+                  />
+                </div>
+
+                <div className="contact-form__group">
+                  <label htmlFor="email">Votre email</label>
+
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="vous@entreprise.com"
+                    autoComplete="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    disabled={loading}
+                  />
+                </div>
               </div>
 
               <div className="contact-form__group">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="votre@email.com"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  disabled={loading}
-                />
-              </div>
+                <div className="contact-form__label-row">
+                  <label htmlFor="message">
+                    Parlez-moi de votre projet
+                  </label>
 
-              <div className="contact-form__group">
-                <label htmlFor="message">
-                  Message <small>({remaining} caractères restants)</small>
-                </label>
+                  <small id="message-counter">
+                    {remaining} caractères
+                  </small>
+                </div>
 
                 <textarea
                   id="message"
                   name="message"
-                  placeholder="Expliquez-moi votre projet..."
+                  placeholder="Votre activité, vos objectifs, le type de site souhaité, vos délais..."
                   value={formData.message}
                   onChange={handleChange}
                   required
                   maxLength={MAX_LEN}
                   disabled={loading}
+                  aria-describedby="message-counter"
                 />
               </div>
 
               <button type="submit" disabled={loading}>
-                {loading ? "Envoi en cours..." : "Envoyer le message"}
+                <span>
+                  {loading ? "Envoi en cours..." : "Envoyer le message"}
+                </span>
+
+                <ArrowUpRight />
               </button>
+
+              <p className="contact-form__privacy">
+                Vos informations sont uniquement utilisées pour répondre à
+                votre demande.
+              </p>
             </form>
 
-            {status && <p className="form-status">{status}</p>}
+            {status.message && (
+              <p
+                className={`form-status form-status--${status.type}`}
+                role={status.type === "error" ? "alert" : "status"}
+                aria-live="polite"
+              >
+                <span aria-hidden="true" />
+                {status.message}
+              </p>
+            )}
           </div>
         </div>
       </section>

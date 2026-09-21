@@ -4,17 +4,10 @@
   --text: #15181f;
   --muted: rgba(21, 24, 31, 0.66);
 
-  /* Fond global */
-  --bg-page: #fbf7f2;
-
   /* Surfaces */
   --card: rgba(255, 255, 255, 0.94);
   --border: rgba(21, 24, 31, 0.10);
 
-  /* Accents doux */
-  --accent-1: #f3b7a6; /* pêche */
-  --accent-2: #b9d6c6; /* sauge */
-  --accent-3: #e6d6ff; /* lavande claire */
 
   /* Rayons / ombres */
   --radius-xl: 28px;

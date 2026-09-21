@@ -1,209 +1,363 @@
-/* =====================================================================
-   DEVOM — Projects.animations.css
-   ---------------------------------------------------------------------
-   Couche d'animations ADDITIVE pour la page Projets.
+/* =========================
+   DEVOM — PROJECTS ANIMATIONS
+   ========================= */
 
-   - Ne modifie NI Projects.js NI Projects.css.
-   - 100% CSS, aucun JavaScript.
-   - Réversible : supprime l'import + ce fichier => site d'origine intact.
-   - Préserve TES hovers existants (lift carte, zoom image, boutons).
-   - Respecte prefers-reduced-motion (le spinner de chargement reste actif).
-
-   POUR L'ACTIVER : dans Projects.js, juste après
-       import "../styles/Projects.css";
-   ajoute :
-       import "../styles/Projects.animations.css";
-
-   (Préfixe "devomp-" sur les keyframes pour éviter tout conflit avec
-    les animations des autres pages dans une SPA.)
-   ===================================================================== */
-
-
-/* =====================================================================
-   1. KEYFRAMES
-   ===================================================================== */
-
-/* Montée + fondu (hero au chargement) */
 @keyframes devomp-rise {
-  from { opacity: 0; transform: translateY(26px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Révélation douce au scroll : fondu + léger flou.
-   N'utilise NI transform NI clip-path -> ne bloque aucun hover et
-   ne découpe pas la box-shadow des cartes. */
+@keyframes devomp-summary-in {
+  from {
+    opacity: 0;
+    transform:
+      translateY(30px)
+      rotate(2deg)
+      scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0)
+      rotate(0)
+      scale(1);
+  }
+}
+
 @keyframes devomp-soft-reveal {
-  from { opacity: 0; filter: blur(7px); }
-  to   { opacity: 1; filter: blur(0); }
+  from {
+    opacity: 0;
+    filter: blur(7px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
 }
 
-/* Reflet qui balaie les boutons au survol */
-@keyframes devomp-shine {
-  from { transform: translateX(-180%) skewX(-18deg); }
-  to   { transform: translateX(220%)  skewX(-18deg); }
+@keyframes devomp-card-in {
+  from {
+    opacity: 0;
+    clip-path:
+      inset(0 0 100% 0 round 18px);
+  }
+
+  to {
+    opacity: 1;
+    clip-path:
+      inset(0 0 0 0 round 18px);
+  }
 }
 
-/* Halo pulsé autour du spinner de chargement */
+@keyframes devomp-float-orb {
+  0%,
+  100% {
+    transform:
+      translate3d(0, 0, 0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate3d(-12px, 10px, 0)
+      scale(1.04);
+  }
+}
+
+@keyframes devomp-label-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 5px rgba(36, 107, 253, 0.1);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 9px rgba(36, 107, 253, 0.025);
+  }
+}
+
 @keyframes devomp-loader-glow {
-  0%   { transform: scale(0.7); opacity: 0.6; }
-  70%  { transform: scale(1.4); opacity: 0; }
-  100% { transform: scale(1.4); opacity: 0; }
+  0% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+
+  75%,
+  100% {
+    opacity: 0;
+    transform: scale(1.65);
+  }
 }
 
-/* Respiration du texte de chargement */
 @keyframes devomp-text-pulse {
-  0%, 100% { opacity: 0.55; }
-  50%      { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 
-/* Apparition de l'état (chargement / erreur) */
-@keyframes devomp-fade {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-
-/* =====================================================================
-   2. ENTRÉE DU HERO (au chargement)
-   fill-mode "backwards" : caché AVANT (pas de flash), retour au style
-   de base APRÈS.
-   ===================================================================== */
+/* ================= HERO ================= */
 
 .projects-label {
-  animation: devomp-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.05s backwards;
+  animation:
+    devomp-rise
+    700ms
+    cubic-bezier(0.22, 1, 0.36, 1)
+    60ms
+    backwards;
 }
+
 .projects-hero h1 {
-  animation: devomp-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.18s backwards;
+  animation:
+    devomp-rise
+    900ms
+    cubic-bezier(0.22, 1, 0.36, 1)
+    170ms
+    backwards;
 }
-.projects-hero p {
-  animation: devomp-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.34s backwards;
+
+.projects-hero__description {
+  animation:
+    devomp-rise
+    820ms
+    cubic-bezier(0.22, 1, 0.36, 1)
+    330ms
+    backwards;
 }
 
+.projects-hero__summary {
+  animation:
+    devomp-summary-in
+    950ms
+    cubic-bezier(0.22, 1, 0.36, 1)
+    300ms
+    backwards;
+}
 
-/* =====================================================================
-   3. RÉVÉLATION DES CARTES AU SCROLL
-   Encapsulé dans @supports : si le navigateur ne gère pas les
-   animations pilotées par le scroll, les cartes restent visibles.
+.projects-label > span {
+  animation:
+    devomp-label-pulse
+    2.4s
+    ease-in-out
+    infinite;
+}
 
-   On utilise opacity + blur (jamais transform) :
-   -> le lift de la carte ET le zoom de l'image au survol restent intacts.
-   ===================================================================== */
+.projects-hero__orb--one {
+  animation:
+    devomp-float-orb
+    8s
+    ease-in-out
+    infinite;
+}
+
+.projects-hero__orb--two {
+  animation:
+    devomp-float-orb
+    10s
+    ease-in-out
+    1.2s
+    infinite
+    reverse;
+}
+
+/* ================= FILTERS ================= */
+
+.projects-filters {
+  animation:
+    devomp-rise
+    750ms
+    cubic-bezier(0.22, 1, 0.36, 1)
+    100ms
+    backwards;
+}
+
+/* ================= CARDS ================= */
+
+.project-card {
+  animation:
+    devomp-card-in
+    650ms
+    cubic-bezier(0.22, 1, 0.36, 1)
+    backwards;
+}
+
+.project-card:nth-child(2) {
+  animation-delay: 55ms;
+}
+
+.project-card:nth-child(3) {
+  animation-delay: 110ms;
+}
+
+.project-card:nth-child(4) {
+  animation-delay: 165ms;
+}
 
 @supports (animation-timeline: view()) {
-  .project-card {
-    animation: devomp-soft-reveal 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+  .projects-gallery__header,
+  .projects-cta {
+    animation:
+      devomp-rise
+      850ms
+      cubic-bezier(0.22, 1, 0.36, 1)
+      both;
     animation-timeline: view();
-    animation-range: entry 5% cover 30%;
-    will-change: opacity, filter;
+    animation-range:
+      entry 5% cover 31%;
   }
 
-  /* Grille 2 colonnes : on décale légèrement la colonne de droite
-     pour une cascade gauche -> droite à chaque rangée. */
-  .project-card:nth-child(even) {
-    animation-range: entry 9% cover 34%;
+  .project-card {
+    animation:
+      devomp-soft-reveal
+      800ms
+      cubic-bezier(0.22, 1, 0.36, 1)
+      both;
+    animation-timeline: view();
+    animation-range:
+      entry 4% cover 29%;
+  }
+
+  .project-card:nth-child(4n + 2) {
+    animation-range:
+      entry 7% cover 32%;
+  }
+
+  .project-card:nth-child(4n + 3) {
+    animation-range:
+      entry 10% cover 35%;
+  }
+
+  .project-card:nth-child(4n + 4) {
+    animation-range:
+      entry 13% cover 38%;
   }
 }
 
+/* ================= BUTTONS ================= */
 
-/* =====================================================================
-   4. MICRO-INTERACTIONS AU SURVOL (additives)
-   ===================================================================== */
-
-/* Boutons pleins : reflet qui balaie au survol.
-   (le translateY au survol reste géré par Projects.css)
-   On exclut le bouton fantôme (transparent). */
-.project-card__btn:not(.project-card__btn--ghost) {
+.project-card__btn:not(
+  .project-card__btn--ghost
+) {
   position: relative;
   overflow: hidden;
 }
-.project-card__btn:not(.project-card__btn--ghost)::after {
+
+.project-card__btn:not(
+  .project-card__btn--ghost
+)::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 55%;
-  height: 100%;
-  background: linear-gradient(
-    100deg,
-    transparent,
-    rgba(255, 255, 255, 0.5),
-    transparent
-  );
-  transform: translateX(-180%) skewX(-18deg);
+  top: -30%;
+  left: -70%;
+  width: 45%;
+  height: 160%;
   pointer-events: none;
-}
-.project-card__btn:not(.project-card__btn--ghost):hover::after {
-  animation: devomp-shine 0.9s ease;
-}
-
-/* Tags techno : aucun hover à l'origine -> on en ajoute un discret. */
-.project-card__techs span {
-  transition: transform 0.2s ease, border-color 0.2s ease,
-              background 0.2s ease, color 0.2s ease;
-}
-.project-card__techs span:hover {
-  transform: translateY(-2px);
-  border-color: rgba(185, 214, 198, 0.75);
-  background: rgba(185, 214, 198, 0.4);
-  color: #2f5540;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.42),
+      transparent
+    );
+  transform: skewX(-18deg);
+  transition: left 650ms ease;
 }
 
-/* Catégorie de la carte : léger glissement quand on survole la carte. */
-.project-card__category {
-  transition: transform 0.28s ease, color 0.28s ease;
-}
-.project-card:hover .project-card__category {
-  transform: translateX(4px);
-  color: #b9764f;
+.project-card__btn:not(
+  .project-card__btn--ghost
+):hover::before {
+  left: 125%;
 }
 
-
-/* =====================================================================
-   5. ÉTAT DE CHARGEMENT (amélioré)
-   On ne touche PAS au spinner (.projects-loader garde son animation
-   projects-spin). On ajoute seulement un halo pulsé derrière, une
-   respiration du texte, et un fondu d'apparition de l'état.
-   ===================================================================== */
-
-.projects-state {
-  animation: devomp-fade 0.5s ease backwards;
+.projects-cta__link {
+  position: relative;
+  overflow: hidden;
 }
+
+.projects-cta__link::before {
+  content: "";
+  position: absolute;
+  top: -30%;
+  left: -70%;
+  width: 45%;
+  height: 160%;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(36, 107, 253, 0.14),
+      transparent
+    );
+  transform: skewX(-18deg);
+  transition: left 650ms ease;
+}
+
+.projects-cta__link:hover::before {
+  left: 125%;
+}
+
+/* ================= LOADER ================= */
 
 .projects-loader {
   position: relative;
 }
+
 .projects-loader::after {
   content: "";
   position: absolute;
-  inset: -12px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(243, 183, 166, 0.4), transparent 70%);
   z-index: -1;
-  animation: devomp-loader-glow 1.5s ease-out infinite;
+  inset: -10px;
+  border-radius: 50%;
+  background:
+    rgba(36, 107, 253, 0.18);
+  animation:
+    devomp-loader-glow
+    1.6s
+    ease-out
+    infinite;
 }
 
-/* Respiration du texte de chargement uniquement (pas le message d'erreur). */
-.projects-state:not(.projects-state--error) p {
-  animation: devomp-text-pulse 1.6s ease-in-out infinite;
+.projects-state:not(
+  .projects-state--error
+) p {
+  animation:
+    devomp-text-pulse
+    1.6s
+    ease-in-out
+    infinite;
 }
 
-
-/* =====================================================================
-   6. ACCESSIBILITÉ — prefers-reduced-motion
-   On neutralise les animations décoratives, MAIS on conserve le
-   spinner de chargement (feedback essentiel pour l'utilisateur).
-   ===================================================================== */
+/* ================= ACCESSIBILITY ================= */
 
 @media (prefers-reduced-motion: reduce) {
   .projects-page *,
   .projects-page *::before,
   .projects-page *::after {
-    animation: none !important;
-    transition: none !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 
-  /* On réactive uniquement le spinner (retour d'info de chargement). */
   .projects-loader {
-    animation: projects-spin 0.8s linear infinite !important;
+    animation:
+      projects-spin
+      850ms
+      linear
+      infinite !important;
   }
 }
