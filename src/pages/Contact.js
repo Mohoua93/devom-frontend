@@ -4,12 +4,8 @@ import React, { useMemo, useState } from "react";
 import "../styles/Contact.css";
 import "../styles/Contact.animations.css";
 
-const runtimeEnv = typeof process !== "undefined" ? process.env : {};
-
-const API_BASE =
-  runtimeEnv.NODE_ENV === "production"
-    ? "https://devom-backend.onrender.com"
-    : "http://localhost:3001";
+// Backend Render : URL fixe pour éviter tout appel à localhost en production.
+const API_BASE = "https://devom-backend.onrender.com";
 
 const MAX_LEN = 5000;
 
@@ -20,11 +16,7 @@ const ArrowUpRight = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <path
-      d="M7 17 17 7M8 7h9v9"
-      stroke="currentColor"
-      strokeWidth="1.8"
-    />
+    <path d="M7 17 17 7M8 7h9v9" stroke="currentColor" strokeWidth="1.8" />
   </svg>
 );
 
@@ -105,7 +97,9 @@ export default function Contact() {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    if (name === "message" && value.length > MAX_LEN) return;
+    if (name === "message" && value.length > MAX_LEN) {
+      return;
+    }
 
     setFormData((previousData) => ({
       ...previousData,
@@ -123,8 +117,11 @@ export default function Contact() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (loading) return;
+    if (loading) {
+      return;
+    }
 
+    // Champ piège antispam.
     if (formData.website) {
       setStatus({
         type: "success",
@@ -172,10 +169,7 @@ export default function Contact() {
     setLoading(true);
 
     const controller = new AbortController();
-    const timeoutId = window.setTimeout(
-      () => controller.abort(),
-      15000
-    );
+    const timeoutId = window.setTimeout(() => controller.abort(), 15000);
 
     try {
       const response = await fetch(`${API_BASE}/api/contact`, {
@@ -229,9 +223,7 @@ export default function Contact() {
             "Une erreur empêche l’envoi du message. Vérifiez votre connexion puis réessayez.",
         });
 
-        if (runtimeEnv.NODE_ENV !== "production") {
-          console.error("Contact error:", error);
-        }
+        console.error("Contact error:", error);
       }
     } finally {
       window.clearTimeout(timeoutId);
@@ -470,7 +462,9 @@ export default function Contact() {
 
               <button type="submit" disabled={loading}>
                 <span>
-                  {loading ? "Envoi en cours..." : "Envoyer le message"}
+                  {loading
+                    ? "Envoi en cours..."
+                    : "Envoyer le message"}
                 </span>
 
                 <ArrowUpRight />
@@ -498,3 +492,4 @@ export default function Contact() {
     </main>
   );
 }
+
