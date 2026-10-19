@@ -1,3 +1,4 @@
+
 import React, { useMemo, useState } from "react";
 
 import "../styles/Contact.css";
@@ -5,13 +6,10 @@ import "../styles/Contact.animations.css";
 
 const runtimeEnv = typeof process !== "undefined" ? process.env : {};
 
-const API_BASE = (
-  runtimeEnv.REACT_APP_API_URL ||
-  runtimeEnv.VITE_API_URL ||
-  (runtimeEnv.NODE_ENV === "production"
+const API_BASE =
+  runtimeEnv.NODE_ENV === "production"
     ? "https://devom-backend.onrender.com"
-    : "http://localhost:3001")
-).replace(/\/+$/, "");
+    : "http://localhost:3001";
 
 const MAX_LEN = 5000;
 
@@ -22,7 +20,11 @@ const ArrowUpRight = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <path d="M7 17 17 7M8 7h9v9" stroke="currentColor" strokeWidth="1.8" />
+    <path
+      d="M7 17 17 7M8 7h9v9"
+      stroke="currentColor"
+      strokeWidth="1.8"
+    />
   </svg>
 );
 
@@ -146,7 +148,8 @@ export default function Contact() {
     if (!name || !email || !message) {
       setStatus({
         type: "error",
-        message: "Merci de renseigner votre nom, votre email et votre message.",
+        message:
+          "Merci de renseigner votre nom, votre email et votre message.",
       });
 
       return;
@@ -169,7 +172,10 @@ export default function Contact() {
     setLoading(true);
 
     const controller = new AbortController();
-    const timeoutId = window.setTimeout(() => controller.abort(), 15000);
+    const timeoutId = window.setTimeout(
+      () => controller.abort(),
+      15000
+    );
 
     try {
       const response = await fetch(`${API_BASE}/api/contact`, {
@@ -235,7 +241,10 @@ export default function Contact() {
 
   return (
     <main className="contact-page">
-      <section className="contact-hero" aria-labelledby="contact-main-title">
+      <section
+        className="contact-hero"
+        aria-labelledby="contact-main-title"
+      >
         <div
           className="contact-hero__orb contact-hero__orb--one"
           aria-hidden="true"
